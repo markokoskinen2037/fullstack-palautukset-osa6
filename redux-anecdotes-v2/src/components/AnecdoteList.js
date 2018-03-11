@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import { voteAnecdote } from "./../reducers/anecdoteReducer"
 import { setNotification } from "./../reducers/notificationReducer"
 
@@ -12,10 +12,27 @@ class AnecdoteList extends React.Component {
     }, 5000)
   }
 
+  filterAnecdotes = () => {
+    const anecdotesToShow = []
+    const anecdotes = this.props.store.getState().anecdotes
+
+    anecdotes.forEach(anecdote => {
+      if (anecdote.content.includes(this.props.store.getState().filter)) {
+        anecdotesToShow.push(anecdote)
+      }
+    })
+    console.log("filtering")
+    return anecdotesToShow
+  }
+
   render() {
 
-    const anecdotes = this.props.store.getState().anecdotes
+    let anecdotes = this.props.store.getState().anecdotes
     console.log(anecdotes)
+
+    anecdotes = this.filterAnecdotes()
+    console.log(anecdotes)
+
     return (
       <div>
         <h2>Anecdotes</h2>
